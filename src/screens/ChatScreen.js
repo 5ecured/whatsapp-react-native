@@ -3,6 +3,7 @@ import React from 'react'
 import bg from '../../assets/images/BG.png'
 import Message from '../components/Message/Message'
 import messages from '../../assets/data/messages.json'
+import InputBox from '../components/InputBox/InputBox'
 
 const ChatScreen = () => {
     return (
@@ -13,6 +14,7 @@ const ChatScreen = () => {
                 style={styles.list}
                 inverted
             />
+            <InputBox />
         </ImageBackground>
     )
 }
