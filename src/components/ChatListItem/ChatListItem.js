@@ -1,20 +1,24 @@
 import { View, Text, Image, StyleSheet } from 'react-native'
 import React from 'react'
+import dayjs from 'dayjs'
+import relativeTime from 'dayjs/plugin/relativeTime'
+dayjs.extend(relativeTime)
 
-const ChatListItem = () => {
+
+const ChatListItem = ({ chat }) => {
     return (
         <View style={styles.container}>
             <Image
-                source={{ uri: 'https://notjustdev-dummy.s3.us-east-2.amazonaws.com/avatars/lukas.jpeg' }}
+                source={{ uri: chat.user.image }}
                 style={styles.image}
             />
             <View style={styles.content}>
                 <View style={styles.row}>
-                    <Text style={styles.name}>Lukas</Text>
-                    <Text style={styles.subTitle}>7:30</Text>
+                    <Text numberOfLines={1} style={styles.name}>{chat.user.name}</Text>
+                    <Text style={styles.subTitle}>{dayjs(chat.lastMessage.createdAt).fromNow(true)}</Text>
                 </View>
 
-                <Text style={styles.subTitle}>Latest message</Text>
+                <Text numberOfLines={2} style={styles.subTitle}>{chat.lastMessage.text}</Text>
             </View>
         </View>
     )
@@ -29,24 +33,25 @@ const styles = StyleSheet.create({
     },
     container: {
         flexDirection: 'row',
-        backgroundColor:'green',
         marginHorizontal: 10,
-        marginVertical: 5
+        marginVertical: 5,
+        height: 70
     },
     content: {
         flex: 1,
-        backgroundColor:'red'
+        borderBottomWidth: StyleSheet.hairlineWidth,
+        borderBottomColor: 'lightgray'
     },
     row: {
-        flexDirection:'row',
-        // justifyContent:'space-between'
+        flexDirection: 'row',
+        marginBottom: 5
     },
     name: {
-        backgroundColor:'lightblue',
-        flex: 1
+        flex: 1,
+        fontWeight: 'bold'
     },
     subTitle: {
-        backgroundColor:'pink'
+        color: 'gray'
     }
 })
 
