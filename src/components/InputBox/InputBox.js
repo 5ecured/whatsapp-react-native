@@ -1,13 +1,20 @@
 import { View, TextInput, StyleSheet } from 'react-native'
-import React from 'react'
+import React, { useState } from 'react'
 import { AntDesign, MaterialIcons } from '@expo/vector-icons'
 
 const InputBox = () => {
+    const [newMessage, setNewMessage] = useState('')
+
+    const onSend = () => {
+        console.warn('sending a message', newMessage);
+        setNewMessage('')
+    }
+
     return (
         <View style={styles.container}>
-            <AntDesign name='plus' size={24} color='royalblue' />
-            <TextInput style={styles.input} placeholder='Type a message...' />
-            <MaterialIcons style={styles.send} name='send' size={24} color='white' />
+            <AntDesign name='plus' size={20} color='royalblue' />
+            <TextInput value={newMessage} onChangeText={setNewMessage} style={styles.input} placeholder='Type a message...' />
+            <MaterialIcons onPress={onSend} style={styles.send} name='send' size={16} color='white' />
         </View>
     )
 }
@@ -15,13 +22,27 @@ const InputBox = () => {
 const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
-        backgroundColor: 'whitesmoke'
+        backgroundColor: 'whitesmoke',
+        padding: 5,
+        paddingHorizontal: 10,
+        alignItems: 'center'
     },
     input: {
-        flex: 1
+        flex: 1,
+        backgroundColor: 'white',
+        padding: 5,
+        paddingHorizontal: 10,
+        borderRadius: 50,
+        borderColor: 'lightgray',
+        borderWidth: StyleSheet.hairlineWidth,
+        marginHorizontal: 10,
+        fontSize: 16
     },
     send: {
-
+        backgroundColor: 'royalblue',
+        padding: 7,
+        borderRadius: 15,
+        overflow: 'hidden'
     }
 
 })
