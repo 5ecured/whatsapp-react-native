@@ -1,15 +1,30 @@
 import { View, Text, ImageBackground, StyleSheet, FlatList, KeyboardAvoidingView, Platform } from 'react-native'
-import React from 'react'
+import React, { useEffect } from 'react'
 import bg from '../../assets/images/BG.png'
 import Message from '../components/Message/Message'
 import messages from '../../assets/data/messages.json'
 import InputBox from '../components/InputBox/InputBox'
+import { useRoute, useNavigation } from '@react-navigation/native'
 
 const ChatScreen = () => {
+    const route = useRoute()
+    /**
+     *  useRoute is used to get the params we passed in from using navigation.navigate() from ChatListItem
+     *  now, in route.params, we have { id: chat.id, name: chat.user.name }
+     * */
+
+    const navigation = useNavigation()
+
+
+    useEffect(() => {
+        navigation.setOptions({ title: route.params.name })
+    }, [route.params.name])
+
     return (
         <KeyboardAvoidingView
             behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
             style={styles.bg}
+            keyboardVerticalOffset={Platform.OS === 'ios' ? 60 : 90}
         >
             <ImageBackground source={bg} style={styles.bg}>
                 <FlatList

@@ -1,13 +1,18 @@
-import { View, Text, Image, StyleSheet } from 'react-native'
+import { View, Text, Image, StyleSheet, Pressable } from 'react-native'
 import React from 'react'
 import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
 dayjs.extend(relativeTime)
+import { useNavigation } from '@react-navigation/native'
 
 
 const ChatListItem = ({ chat }) => {
+    const navigation = useNavigation()
+
+
     return (
-        <View style={styles.container}>
+        //navigation.navigate 1st arg is the name of the screen. the 2nd is an object with the params we wanna send
+        <Pressable style={styles.container} onPress={() => navigation.navigate('Chat', { id: chat.id, name: chat.user.name })}>
             <Image
                 source={{ uri: chat.user.image }}
                 style={styles.image}
@@ -20,7 +25,7 @@ const ChatListItem = ({ chat }) => {
 
                 <Text numberOfLines={2} style={styles.subTitle}>{chat.lastMessage.text}</Text>
             </View>
-        </View>
+        </Pressable>
     )
 }
 
